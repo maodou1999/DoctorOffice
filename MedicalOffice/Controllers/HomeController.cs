@@ -202,9 +202,9 @@ namespace CherryCitySoftware.MedicalOffice.Controllers
                 db.ContactInformations.Add(new ContactInformation()
                 {
                     Address = "Somewhere",
-                    City = "Salem",
-                    State = "OR",
-                    PostalCode = "97301",
+                    City = "Somewhere",
+                    State = "Somewhere",
+                    PostalCode = "99999",
                     Telphone = "555-555-5555",
                     Fax = "555-555-5555"
                 });
@@ -222,9 +222,9 @@ namespace CherryCitySoftware.MedicalOffice.Controllers
                 db.ContactInformations.Add(new ContactInformation()
                 {
                     Address = "Somewhere",
-                    City = "Salem",
-                    State = "OR",
-                    PostalCode = "97301",
+                    City = "Somewhere",
+                    State = "Somewhere",
+                    PostalCode = "99999",
                     Telphone = "555-555-5555",
                     Fax = "555-555-5555"
                 });
