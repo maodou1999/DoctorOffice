@@ -22,7 +22,6 @@ namespace CherryCitySoftware.MedicalOffice.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
-
         public AccountController()
         {
         }
