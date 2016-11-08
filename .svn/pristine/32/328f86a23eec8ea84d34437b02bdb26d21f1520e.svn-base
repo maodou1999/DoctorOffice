@@ -1,0 +1,36 @@
+﻿@model IEnumerable<CherryCitySoftware.MedicalOffice.Models.ApplicationUser>
+@using CherryCitySoftware.MedicalOffice.extensions
+@using GridMvc.Html
+
+
+<!-- Button trigger modal -->
+<button class="btn btn-sm" data-toggle="modal" data-target="#myModal" id="myModalBtn">
+    Search For Patient
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Accounts</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Grid(Model).Columns(cols =>
+                {
+                    cols.Add(c => c.UserName).Titled("Email").Filterable(false);
+                    cols.Add(c => c.Id).Titled("").Sanitized(false).Encoded(false).SetWidth(0).RenderValueAs(c => Html.Hidden(c.Id, c.Id));
+                    cols.Add(c => c.PhoneNumber).Titled("Phone #").Sortable(true).Filterable(true);
+
+                    cols.Add(c => c.DisplayName).Titled("Name").Sortable(true).Filterable(true);
+
+                    cols.Add(c => c.BirthDay).Titled("Birthday").RenderValueAs(c=>c.BirthDay.HasValue?c.BirthDay.Value.ToString("yyyy-MM-dd"):"").Sortable(true);
+                }).Sortable().WithPaging(15)
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

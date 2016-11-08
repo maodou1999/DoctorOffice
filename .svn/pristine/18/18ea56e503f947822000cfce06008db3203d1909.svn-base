@@ -1,0 +1,36 @@
+﻿@model IEnumerable<CherryCitySoftware.MedicalOffice.Models.MessageListViewModel>
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Inbox Messages";
+}
+
+<h2>Inbox Messages</h2>
+
+<p>
+    @Html.ActionLink("Compose", "Create")
+   
+</p>
+<div class="form-group minheight-300">
+
+    @Html.Grid(Model).Columns(cols=>
+    {
+
+        cols.Add(c => c.UserName).Titled("From").Filterable(true).Encoded(false).Sanitized(false)
+            .RenderValueAs(c => @<span>@if (c.ReadByRecepient)
+                                       {@Html.ActionLink(c.UserName, "Details", new { Id = c.Id })}
+                                       else
+                                       {<b>@Html.ActionLink(c.UserName, "Details", new { Id = c.Id }) </b>} 
+                                </span>).Width = "150px";
+            
+       
+        cols.Add().Titled("Message").Encoded(false).Sanitized(false)
+            .RenderValueAs(c => @<div>
+                                <span class="subject">@Server.HtmlEncode(c.Subject)</span>
+                                @Server.HtmlEncode(c.Message)
+                            </div>
+                            );
+        cols.Add(c => c.Date).Filterable(false).Sortable(true).Width = "120px";
+        
+    }).WithPaging(15).Sortable()
+</div>

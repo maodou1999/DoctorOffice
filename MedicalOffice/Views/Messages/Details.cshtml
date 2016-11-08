@@ -1,0 +1,65 @@
+﻿@model CherryCitySoftware.MedicalOffice.Models.Message
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Message</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @if (Model.DocFile != null && Model.DocFile.Count > 0)
+        {
+            <dt>
+                @Html.Label(Model.DocFile.Count==1? "Attachment" : "Attachments")
+            </dt>
+            <dd>
+                @foreach (var df in Model.DocFile)
+                {
+                    @Html.ActionLink(df.FileName, "Download", "DocFiles", new { Id = df.ID }, new { }) 
+                }
+            </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>       
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+
+        <dd>
+            @Html.TextAreaFor(m => m.Content, new {@class="form-control", @rows=15 })
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt></dt>
+        <dd>
+            @using (Html.BeginForm())
+            {
+                @Html.HiddenFor(m=>m.Id)
+                @Html.AntiForgeryToken()
+
+                @*<div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" /> 
+                </div>*@
+                @*@Html.ActionLink("Delete","Delete", new { id = Model.Id })*@
+            }
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Reply", "Reply", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

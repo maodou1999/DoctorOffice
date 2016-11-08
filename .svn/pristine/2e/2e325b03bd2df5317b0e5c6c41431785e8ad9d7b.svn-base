@@ -1,0 +1,22 @@
+﻿@model IEnumerable<CherryCitySoftware.MedicalOffice.Models.PatientPolicy>
+
+
+
+
+@if (!Model.Any())
+{
+    <dt>
+        @Html.Label("No Policy")
+    </dt>
+}       
+            
+        
+@foreach (var item in Model)
+{
+    <dt>
+        @Html.DisplayNameFor(model => model.Policy) 
+    </dt>
+    <dt>
+        @Html.TextAreaFor(m => item.Policy, new { @rows = 15, @readonly = "readonly", @class = "form-control" })
+    </dt>
+}

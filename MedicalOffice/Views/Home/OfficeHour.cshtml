@@ -1,0 +1,138 @@
+﻿@model CherryCitySoftware.MedicalOffice.Models.OfficeHourViewModel
+
+@{
+    ViewBag.Title = "Office Hour";
+}
+
+<div>
+    <h4>Office Hours</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            @Html.DisplayFor(model => model.RegularhourLabelText) 
+            @if (User.IsInRole("Admin")) {@Html.ActionLink("Edit Regular Office Hours", "EditOfficeHour", 
+                new { id = Model.Regualhour.Id })}
+            <dl class="dl-horizontal">
+
+                <dt>
+                   
+                    @Html.DisplayNameFor(m => m.Regualhour.Monday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Regualhour.Monday)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Regualhour.Tuesday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Regualhour.Tuesday)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Regualhour.Wednesday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Regualhour.Wednesday)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Regualhour.Thursday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Regualhour.Thursday)
+                </dd>
+                <dt>
+                    @Html.LabelFor(model => model.Regualhour.Friday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(m => m.Regualhour.Friday)
+                </dd>
+                <dt>
+                    @Html.LabelFor(model => model.Regualhour.Saturday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(m => m.Regualhour.Saturday)
+                </dd>
+                <dt>
+                    @Html.LabelFor(model => model.Regualhour.Sunday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(m => m.Regualhour.Sunday)
+                </dd>
+            </dl>
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.DisplayFor(model => model.CurrentHourLabelText)
+            @if (User.IsInRole("Admin"))
+            { @Html.ActionLink(" Edit Current Week Hour ", "EditOfficeHour", new { id = Model.Currenthour.Id })}
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(m => m.Currenthour.Monday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Currenthour.Monday)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Currenthour.Tuesday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Currenthour.Tuesday)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Currenthour.Wednesday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Currenthour.Wednesday)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Currenthour.Thursday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Currenthour.Thursday)
+                </dd>
+                <dt>
+                    @Html.LabelFor(model => model.Currenthour.Friday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(m => m.Currenthour.Friday)
+                </dd>
+                <dt>
+                    @Html.LabelFor(model => model.Currenthour.Saturday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(m => m.Currenthour.Saturday)
+                </dd>
+                <dt>
+                    @Html.LabelFor(model => model.Currenthour.Sunday)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(m => m.Currenthour.Sunday)
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.DisplayFor(model => model.HolidayNoteLabelText) 
+            @if (User.IsInRole("Admin"))
+            {@Html.ActionLink("Edit Holiday ", "EditHoliday", new { id = Model.Holiday.Id })}
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(m => m.Holiday.Holidays)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Holiday.Holidays)
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+
+
+</div>
+

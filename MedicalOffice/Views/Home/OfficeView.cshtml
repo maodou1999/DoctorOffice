@@ -1,0 +1,42 @@
+﻿@model CherryCitySoftware.MedicalOffice.Models.OfficeHourViewModel
+
+@{
+    ViewBag.Title = "OfficeView";
+}
+
+<h2>OfficeView</h2>
+
+<div>
+    <h4>OfficeHourViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentHourLabelText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentHourLabelText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegularhourLabelText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegularhourLabelText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HolidayNoteLabelText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HolidayNoteLabelText)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

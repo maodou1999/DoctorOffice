@@ -1,0 +1,60 @@
+﻿@model CherryCitySoftware.MedicalOffice.Models.UserDetailsViewModel
+@using CherryCitySoftware.MedicalOffice.extensions;
+<div>
+    <h4>Account Details</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.Email)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Email)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.DisplayName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.DisplayName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.DisplayAddress)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.DisplayAddress)
+                </dd>
+                <dt>
+                    @Html.Label("Phone Number")
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.User.PhoneNumber)
+                </dd>
+                <dt>
+                    @Html.LabelFor(model => model.User.Roles)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(m=>m.UserRoles)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-8">
+            @if(Model.Policies==null || !Model.Policies.Any())
+            { 
+                @Html.ActionLink("Add Patient Policy ", "CreatePolicy", "PatientPolicies", new { PatientId = Model.User.Id }, null)
+            }
+            @Html.Partial("_PatientPolicyViewOnly", Model.Policies)
+            
+        </div>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+
+</div>

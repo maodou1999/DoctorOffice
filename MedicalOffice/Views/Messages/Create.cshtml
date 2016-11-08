@@ -1,0 +1,69 @@
+﻿@model CherryCitySoftware.MedicalOffice.Models.CreateMessageViewModel
+@using CherryCitySoftware.MedicalOffice.extensions
+
+@{
+    ViewBag.Title = "Compose Message";
+}
+
+<h2>Compose</h2>
+
+@using (Html.BeginForm("Create", "Messages", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Message</h4>@Html.Hidden("hiddenSearchField", Html.ViewContext.HttpContext.Request.QueryString["grid-filter"])
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("To", new {@class="control-label col-md-2" })
+            <div class="col-md-10">
+
+              @Html.DropDownListFor(m => m.RecepientId, this.User.GetRecepients(), User.IsInRole("Patient")? "--Select a doctor--" : "--Select a patient--", new { htmlAttributes = new { @class = "form-control" } })
+              @if (User.IsInRole("Doctor") || User.IsInRole("Admin")) {@Html.Partial("_AccountGridPartial", User.GetPatients())}
+              @Html.ValidationMessageFor(m => m.RecepientId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Attachment", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input name="attachedFile" type="file" class="btn btn-default" />
+                <input name="attachedFile" type="file" style="display:none" class="btn btn-default" />
+                <input name="attachedFile" type="file" style="display:none" class="btn btn-default" />
+                <input name="attachedFile" type="file" style="display:none" />
+                <input name="attachedFile" type="file" style="display:none" />
+                <input name="attachedFile" type="file" style="display:none" />
+                <input name="attachedFile" type="file" style="display:none" />
+                <input name="attachedFile" type="file" style="display:none" />
+                <input name="attachedFile" type="file" style="display:none" />
+                <input name="attachedFile" type="file" style="display:none" />
+                <input type="button" value="Clear Attachments" id="clear-attachments" class="btn-default btn" />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-lg-10">
+                @Html.TextAreaFor(model => model.Content, new { @class = "form-control", @rows=15 })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Send" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

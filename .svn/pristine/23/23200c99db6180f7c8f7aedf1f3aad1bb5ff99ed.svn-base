@@ -1,0 +1,35 @@
+﻿@model CherryCitySoftware.MedicalOffice.Models.ResourceLink
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ResourceLink</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ResourceLinkName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResourceLinkName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResourceLinkAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResourceLinkAddress)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

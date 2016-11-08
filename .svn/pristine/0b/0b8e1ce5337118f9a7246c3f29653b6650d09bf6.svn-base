@@ -1,0 +1,88 @@
+﻿@model CherryCitySoftware.MedicalOffice.Models.HomeViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h2>Dr. Manya Helman</h2>
+    <p class="lead">Dr. Helman practices general Family Medicine, with a specialization in
+Addiction-related Illness</p>
+    <p>Directions and contact information: <a href="/Home/Contact"><img src="~/Images/mapicon.png"/></a></p>
+    <div>
+
+        
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Contact.Address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Contact.DisplayAddress)
+            </dd>
+
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Contact.Telphone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Contact.Telphone)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Contact.Fax)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Contact.Fax)
+            </dd>
+
+        </dl>
+       
+    </div>
+
+    <p>If you are new patient to Dr. Helman, you may need to download and fill in the following forms:</p>
+   
+    <table>
+        @foreach (var item in Model.Documents)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description) 
+                </td>
+                <td>
+                    @Html.ActionLink("Download", "Download", "DocFiles", new { Id = item.ID }, new { })
+                </td>
+                
+            </tr>
+        }
+    </table>
+</div>
+
+@*<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>*@
+
+<hr />
+<footer>
+    <p> © 2014- &copy; @DateTime.Now.Year-Dr.Helman Welcome to our web page! We hope that the information here will be useful to you. This is the ONLY authorized website for me, and for my practice and clinic. Please note that there are a number of other web sites on the internet under my name, with a recent search showing Health Grades, etc etc. These are not authorized by me, and present information ostensibly from me without my review or consent. If you have questions with regard to these, please contact us at the office using the modalities given in this site. Manya B. Helman MD</p>
+</footer>

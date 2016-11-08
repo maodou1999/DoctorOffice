@@ -1,0 +1,10 @@
+﻿@model CherryCitySoftware.MedicalOffice.Models.SelectRoleEditorViewModel
+
+@{
+    ViewBag.Title = "SelectRoleEditorViewModel";
+}
+<div>
+    @Html.HiddenFor(model => model.RoleId) @Html.HiddenFor(m=>m.RoleName)
+    @Html.CheckBoxFor(model => model.Selected)
+    @Html.LabelFor(model=>model.Selected, Model.RoleName)
+</div>

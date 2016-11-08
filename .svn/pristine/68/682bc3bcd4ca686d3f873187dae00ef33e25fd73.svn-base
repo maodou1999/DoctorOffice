@@ -1,0 +1,183 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using CherryCitySoftware.MedicalOffice.Context;
+using CherryCitySoftware.MedicalOffice.Models;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+
+namespace CherryCitySoftware.MedicalOffice.Controllers
+{
+    public class DocFilesController : Controller
+    {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        // GET: DocFiles
+        [Authorize(Roles = "Admin")]
+        public ActionResult Index()
+        {
+            var model = db.DocFiles.Where(f=>f.Message == null).ToList();
+            return View(model);
+        }
+
+        // GET: DocFiles/Details/5
+        public async Task<FileResult> Download(int? id)
+        {
+            if (id == null)
+            {
+                return null;
+            }
+            DocFile docFile = await db.DocFiles.Where(d=>d.ID==id.Value).Include(d=>d.Message).SingleOrDefaultAsync();
+            if (docFile == null)
+            {
+                return null;
+            }
+            if (docFile.Message == null)
+            {
+                return File(docFile.Content, docFile.FileType, docFile.FileName);
+            }
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                docFile = await db.DocFiles.Where(d => d.ID == id.Value
+                   && (d.Message.Recepient.Id.Equals(userId, StringComparison.InvariantCultureIgnoreCase)
+                        || d.Message.Sender.Id.Equals(userId, StringComparison.InvariantCultureIgnoreCase))
+                   ).SingleAsync();
+                if (docFile == null) return null;
+
+               return File(docFile.Content, docFile.FileType, docFile.FileName);
+            }
+            return null;
+        }
+
+        [Authorize(Roles="Admin")]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: DocFiles/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> Create([Bind(Include = "ID,Description")] FileViewModel docFile, HttpPostedFileBase uploadFile)
+        {
+            if (ModelState.IsValid)
+            {
+                if (uploadFile == null)
+                {
+                    ModelState.AddModelError("uploadFile", "Please select a file");
+                    return View();
+                }
+                byte[] buff = new byte[uploadFile.ContentLength];
+                int len =  await uploadFile.InputStream.ReadAsync(buff, 0, uploadFile.ContentLength);
+                DocFile df = new DocFile()
+                {
+                    Description = docFile.Description,
+                    FileType = uploadFile.ContentType,
+                    FileName = uploadFile.FileName,
+                    Content = buff
+                };
+                db.DocFiles.Add(df);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View(docFile);
+        }
+
+        // GET: DocFiles/Edit/5
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DocFile docFile = db.DocFiles.Find(id);
+            if (docFile == null)
+            {
+                return HttpNotFound();
+            }
+            return View(new FileViewModel() { ID=docFile.ID, Description = docFile.Description });
+        }
+
+        // POST: DocFiles/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task< ActionResult> Edit([Bind(Include = "ID,Description")] FileViewModel docFile, HttpPostedFileBase uploadFile)
+        {
+            if (uploadFile == null)
+            {
+                ModelState.AddModelError("uploadFile", "Please select a file");
+                return View();
+            }
+            
+               
+            if (ModelState.IsValid)
+            {
+                byte[] buff = new byte[uploadFile.ContentLength];
+                int len = await uploadFile.InputStream.ReadAsync(buff, 0, uploadFile.ContentLength);
+                DocFile df = new DocFile()
+                {
+                    ID = docFile.ID,
+                    Description = docFile.Description,
+                    FileType = uploadFile.ContentType,
+                    FileName = uploadFile.FileName,
+                    Content = buff
+                };
+                db.Entry(df).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(docFile);
+        }
+
+        // GET: DocFiles/Delete/5
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DocFile docFile = db.DocFiles.Find(id);
+            if (docFile == null)
+            {
+                return HttpNotFound();
+            }
+            return View(docFile);
+        }
+
+        // POST: DocFiles/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            DocFile docFile = db.DocFiles.Find(id);
+            db.DocFiles.Remove(docFile);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}

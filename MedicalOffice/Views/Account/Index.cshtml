@@ -1,0 +1,75 @@
+﻿@model IEnumerable<CherryCitySoftware.MedicalOffice.Models.ApplicationUser>
+@using CherryCitySoftware.MedicalOffice.extensions
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Register")
+    @*<br/>
+    @Html.ActionLink("Reset password for a user", "ResetPassword")*@
+</p>
+<div class="minheight-300">
+    @Html.Grid(Model).Columns(cols =>
+    {
+        cols.Add(c => c.UserName).Titled("Email").Filterable(false).Encoded(false).Sanitized(false)
+            .RenderValueAs(c => @<b>@Html.ActionLink(c.UserName, "UserDetails", new { Id = c.Id }) </b>);
+
+        cols.Add(c=>c.PhoneNumber).Titled("Phone #").Sortable(true).Filterable(true);
+
+        cols.Add(c => c.DisplayName).Titled("Name").Sortable(true).Filterable(true);
+        
+        cols.Add(c => c.BirthDay).Titled("Birthday").Filterable(true);
+        cols.Add().Encoded(false).Sanitized(false)
+            .RenderValueAs(c => @<b>
+                                    @Html.ActionLink("Reset Password ", "ResetPasswordByAdmin", new { Id = c.Id }) |
+                                    @Html.ActionLink("Edit", "EditUser", new { Id = c.Id }) | 
+                                    @Html.ActionLink("View", "UserDetails", new { Id=c.Id }) | 
+                                    @Html.ActionLink("Delete", "Delete", new { Id = c.Id })
+                                </b> );
+
+    }).Sortable().WithPaging(15)
+
+   
+
+    @*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayName("Name")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(m => item.LastName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditUser", new { id = item.Id }) |
+                    @Html.ActionLink("View", "UserDetails", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>*@
+
+</div>

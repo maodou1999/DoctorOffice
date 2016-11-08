@@ -1,0 +1,30 @@
+﻿
+@model IEnumerable<CherryCitySoftware.MedicalOffice.Models.PatientPolicy>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p> @if (User.IsInRole("Admin"))
+    {@Html.ActionLink("Create New", "Create")}
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Policy)
+        </th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.TextAreaFor(modelItem => item.Policy, new { @class="form-control", @rows=15})
+        </td>
+        
+    </tr>
+}
+
+</table>

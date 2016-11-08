@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Dr. Helman</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header cherry">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="navbar-brand " style="width:50px;cursor:pointer; cursor:hand;">
+                   
+                </div>
+                @Html.ActionLink("Dr. Helman", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @if (User.IsInRole("Admin"))
+                    { 
+                    <li>@Html.ActionLink("Accounts", "Index", "Account")</li>
+                    <li>@Html.ActionLink("Forms", "Index","DocFiles")</li>
+                    @*<li>@Html.ActionLink("Edit Contact Information", "EditContact", "Home")</li>*@
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @*if (User.IsInRole("Patient"))
+                        { 
+                            <li>@Html.ActionLink("Patient Policy", "Index", "PatientPolicies")</li>
+                        }*@
+                        if (User.IsInRole("Doctor") || User.IsInRole("Patient"))
+                        { 
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Messages<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Inbox", "Index", "Messages")</li>
+                                <li>@Html.ActionLink("Sent", "Sent", "Messages")</li>
+                            </ul>
+                        </li>
+                        }
+                    }
+                    
+                    @*@if (User.IsInRole("Admin"))
+                    {
+                    <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
+                    }*@
+                    @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
+                    <li>@Html.ActionLink("Office Hour", "OfficeHour", "Home")</li>
+                    @*<li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                    <li>@Html.ActionLink("Resource Link","Index","ResourceLinks")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        @*<hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - © 2014 -Dr.Helman Welcome to our web page! We hope that the information here will be useful to you. This is the ONLY authorized website for me, and for my practice and clinic. Please note that there are a number of other web sites on the internet under my name, with a recent search showing Health Grades, etc etc. These are not authorized by me, and present information ostensibly from me without my review or consent. If you have questions with regard to these, please contact us at the office using the modalities given in this site. Manya B. Helman MD</p>
+        </footer>*@
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/gridmvc")
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $(".navbar-brand").click(function () {
+            location = "/Home";
+        });
+    });
+    </script>
+
+</body>
+</html>

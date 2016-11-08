@@ -1,0 +1,40 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.subject{
+    font-weight:bold;
+}
+
+.subj{
+    width: 60%;
+    overflow: hidden;
+    /*white-space: nowrap;*/
+}
+
+textarea{
+    max-width:100%;
+    width:100%;
+    
+}
+
+.minheight-300 {
+min-height: 300px;
+}
+.cherry{
+    background:url('/Images/drHelman48x48.png') no-repeat center left;
+}
