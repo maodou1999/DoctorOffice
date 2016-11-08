@@ -61,11 +61,11 @@ namespace CherryCitySoftware.MedicalOffice.Context
 
             ApplicationUser user = new ApplicationUser();
             PasswordHasher passwordHasher = new PasswordHasher();
-
-            user.UserName = "maria_ji_z@yahoo.com";
-            user.Email = "maria_ji_z@yahoo.com";
-            user.FirstName = "Maria";
-            user.LastName = "Ji";
+            // Setting an admin account using email addres
+            user.UserName = "Adminemail@yahoo.com";
+            user.Email = "Adminemail@yahoo.com";
+            user.FirstName = "First";
+            user.LastName = "Last";
 
             IdentityResult result = userManager.Create(user, "Pass@123");
 
